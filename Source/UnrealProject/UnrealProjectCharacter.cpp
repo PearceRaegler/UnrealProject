@@ -67,6 +67,9 @@ void AUnrealProjectCharacter::SetupPlayerInputComponent(UInputComponent* PlayerI
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUnrealProjectCharacter::Look);
+
+		// Looking
+		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUnrealProjectCharacter::Light);
 	}
 	else
 	{
@@ -98,5 +101,15 @@ void AUnrealProjectCharacter::Look(const FInputActionValue& Value)
 		// add yaw and pitch input to controller
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
+	}
+}
+
+void AUnrealProjectCharacter::Light() {
+	_isLightOn = !_isLightOn;
+	if (_isLightOn) {
+
+	}
+	else {
+
 	}
 }

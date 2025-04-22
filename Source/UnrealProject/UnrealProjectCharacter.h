@@ -44,6 +44,9 @@ class AUnrealProjectCharacter : public ACharacter
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* LightAction;
 	
 public:
 	AUnrealProjectCharacter();
@@ -54,6 +57,8 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	void Light();
 
 protected:
 	// APawn interface
@@ -67,5 +72,10 @@ public:
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "References")
+	UChildActorComponent* FlashLight;
+
+protected:
+	bool _isLightOn;
 };
 
