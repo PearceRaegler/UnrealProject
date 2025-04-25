@@ -9,6 +9,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "Components/SpotLightComponent.h"
 #include "Engine/LocalPlayer.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
@@ -34,6 +35,13 @@ AUnrealProjectCharacter::AUnrealProjectCharacter()
 	Mesh1P->bCastDynamicShadow = false;
 	Mesh1P->CastShadow = false;
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
+
+	// Create the FlashLight object and setup its properties
+	FlashLight = CreateDefaultSubobject<USpotLightComponent>(TEXT("Light"));
+	FlashLight->SetupAttachment(FirstPersonCameraComponent);
+	FlashLight->SetIntensity(0.0f);
+	FlashLight->SetInnerConeAngle(25.0f);
+	FlashLight->SetLightColor(FLinearColor(1.0f, 0.913099f, 0.40724f));
 
 }
 
@@ -68,13 +76,23 @@ void AUnrealProjectCharacter::SetupPlayerInputComponent(UInputComponent* PlayerI
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUnrealProjectCharacter::Look);
 
-		// Looking
-		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUnrealProjectCharacter::Light);
+		// FlashLight
+		EnhancedInputComponent->BindAction(LightAction, ETriggerEvent::Started, this, &AUnrealProjectCharacter::LightToggle);
 	}
 	else
 	{
 		UE_LOG(LogTemplateCharacter, Error, TEXT("'%s' Failed to find an Enhanced Input Component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
 	}
+}
+
+void AUnrealProjectCharacter::BeginPlay() {
+	Super::BeginPlay();
+
+	// start with the light off
+	_isLightOn = false;
+
+	// reset the light
+	FlashLight->RecreateRenderState_Concurrent();
 }
 
 
@@ -104,12 +122,20 @@ void AUnrealProjectCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
-void AUnrealProjectCharacter::Light() {
-	_isLightOn = !_isLightOn;
-	if (_isLightOn) {
+void AUnrealProjectCharacter::LightToggle() {
 
-	}
-	else {
-
+	// inverse the isOn bool and change the states of the light
+	if (FlashLight != nullptr) {
+		_isLightOn = !_isLightOn;
+		if (_isLightOn) {
+			// turn light on
+			FlashLight->SetIntensity(9000.0f);
+			FlashLight->RecreateRenderState_Concurrent();
+		}
+		else {
+			// turn light off
+			FlashLight->SetIntensity(0.0f);
+			FlashLight->RecreateRenderState_Concurrent();
+		}
 	}
 }

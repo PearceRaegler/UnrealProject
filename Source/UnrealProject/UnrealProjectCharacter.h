@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "Components/SpotLightComponent.h"
 #include "UnrealProjectCharacter.generated.h"
 
 class UInputComponent;
@@ -58,12 +59,14 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
-	void Light();
+	void LightToggle();
+
 
 protected:
 	// APawn interface
 	virtual void NotifyControllerChanged() override;
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
+	virtual void BeginPlay() override;
 	// End of APawn interface
 
 public:
@@ -72,8 +75,8 @@ public:
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "References")
-	UChildActorComponent* FlashLight;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lighting", meta = (AllowPrivateAccess = "true"))
+	USpotLightComponent* FlashLight;
 
 protected:
 	bool _isLightOn;
