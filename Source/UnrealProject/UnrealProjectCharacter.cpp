@@ -42,6 +42,7 @@ AUnrealProjectCharacter::AUnrealProjectCharacter()
 	FlashLight->SetIntensity(0.0f);
 	FlashLight->SetInnerConeAngle(25.0f);
 	FlashLight->SetLightColor(FLinearColor(1.0f, 0.913099f, 0.40724f));
+	FlashLight->MarkRenderStateDirty();
 
 }
 
@@ -90,7 +91,6 @@ void AUnrealProjectCharacter::BeginPlay() {
 
 	// start with the light off
 	_isLightOn = false;
-
 	// reset the light
 	FlashLight->RecreateRenderState_Concurrent();
 }
@@ -130,12 +130,12 @@ void AUnrealProjectCharacter::LightToggle() {
 		if (_isLightOn) {
 			// turn light on
 			FlashLight->SetIntensity(9000.0f);
-			FlashLight->RecreateRenderState_Concurrent();
+			//FlashLight->RecreateRenderState_Concurrent();
 		}
 		else {
 			// turn light off
 			FlashLight->SetIntensity(0.0f);
-			FlashLight->RecreateRenderState_Concurrent();
+			//FlashLight->RecreateRenderState_Concurrent();
 		}
 	}
 }
