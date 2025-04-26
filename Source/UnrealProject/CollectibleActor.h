@@ -12,21 +12,23 @@ class UNREALPROJECT_API ACollectibleActor : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
-	ACollectibleActor();
-
 	UPROPERTY(EditAnywhere, Category = "Score")
 	int32 Score = 10;
 
 	UPROPERTY(EditAnywhere, Category = "SpawnPoints")
 	TArray<AActor*> PointsArr;
 
+public:
+	// Sets default values for this actor's properties
+	ACollectibleActor();
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UStaticMeshComponent* _StaticMesh;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	UStaticMeshComponent* _StaticMesh;
 
 	UFUNCTION()
 	void OnCollectibleBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);

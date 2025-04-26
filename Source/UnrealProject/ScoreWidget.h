@@ -18,10 +18,4 @@ class UNREALPROJECT_API UScoreWidget : public UUserWidget
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta=(BindWidget))
 	UTextBlock* ScoreText;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	int32 score = 0;
-
-	UFUNCTION()
-	void AddToScore(int32 amount);
 };

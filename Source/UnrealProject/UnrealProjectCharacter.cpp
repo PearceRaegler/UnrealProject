@@ -9,6 +9,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "ScoreWidget.h"
 #include "Components/SpotLightComponent.h"
 #include "Engine/LocalPlayer.h"
 
@@ -93,11 +94,14 @@ void AUnrealProjectCharacter::BeginPlay() {
 	_isLightOn = false;
 	// reset the light
 	FlashLight->RecreateRenderState_Concurrent();
+
+	score = 0;
 }
 
 void AUnrealProjectCharacter::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
+	OnScoreChanged(1);
 }
 
 void AUnrealProjectCharacter::Move(const FInputActionValue& Value)
@@ -141,6 +145,20 @@ void AUnrealProjectCharacter::LightToggle() {
 			FlashLight->SetIntensity(0.0f);
 			//FlashLight->RecreateRenderState_Concurrent();
 		}
+	}
+}
+
+void AUnrealProjectCharacter::OnScoreChanged(int32 amount) {
+
+	score += amount;
+	//UE_LOG(LogTemp, Log, TEXT("U[pdated"));
+
+	if (ScoreWidget != nullptr) {
+
+		// add to the score
+		auto sText = Cast<UScoreWidget>(ScoreWidget);
+
+		sText->ScoreText->SetText(FText::Format(FText::FromString(TEXT("Score: {0}")), score));
 	}
 }
 

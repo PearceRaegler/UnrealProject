@@ -54,6 +54,9 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+	void OnScoreChanged(int32 amount);
+
 protected:
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
@@ -71,6 +74,8 @@ protected:
 	virtual void BeginPlay() override;
 	// End of APawn interface
 
+
+
 public:
 	/** Returns Mesh1P subobject **/
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
@@ -80,7 +85,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lighting")
 	USpotLightComponent* FlashLight;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UUserWidget* ScoreWidget;
+
 protected:
 	bool _isLightOn;
+	int32 score = 0;
 };
 

@@ -3,9 +3,4 @@
 
 #include "ScoreWidget.h"
 
-void UScoreWidget::AddToScore(int32 amount) {
-	score += amount;
-
-	ScoreText->SetText( FText::FromString( TEXT( "Score: {0}", score ) ) );
-}
 

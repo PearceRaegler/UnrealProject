@@ -3,6 +3,8 @@
 #include "UnrealProjectCharacter.h"
 #include "SpawnPointActor.h"
 #include "Kismet/GameplayStatics.h"
+#include "ScoreWidget.h"
+#include "UnrealProjectCharacter.h"
 #include "CollectibleActor.h"
 
 // Sets default values
@@ -38,7 +40,12 @@ void ACollectibleActor::OnCollectibleBeginOverlap(AActor* OverlappedActor, AActo
 	if (player) {
 		TeleportTo(FVector(0.0f,0.0f,-100.0f), FRotator(0.0f, 0.0f, 0.0f));
 
+		// add to the player's score
+		player->OnScoreChanged(Score);
+
+		// run the move to new location after a random amount of time
 		FTimerHandle TimerHandle;
+
 		GetWorldTimerManager().SetTimer(TimerHandle, this, &ACollectibleActor::MoveToNewLocation, FMath::RandRange(10.0f, 20.0f), false); // Executes MyFunction after 2 seconds
 	}
 }
