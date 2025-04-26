@@ -95,6 +95,10 @@ void AUnrealProjectCharacter::BeginPlay() {
 	FlashLight->RecreateRenderState_Concurrent();
 }
 
+void AUnrealProjectCharacter::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+
+}
 
 void AUnrealProjectCharacter::Move(const FInputActionValue& Value)
 {
@@ -139,3 +143,4 @@ void AUnrealProjectCharacter::LightToggle() {
 		}
 	}
 }
+

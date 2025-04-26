@@ -32,9 +32,4 @@ protected:
 	void OnCollectibleBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
 
 	void MoveToNewLocation();
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 };

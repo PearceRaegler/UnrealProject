@@ -28,13 +28,6 @@ void ACollectibleActor::BeginPlay()
 	MoveToNewLocation();
 }
 
-// Called every frame
-void ACollectibleActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
 void ACollectibleActor::OnCollectibleBeginOverlap(AActor* OverlappedActor, AActor* OtherActor) {
 	//UE_LOG(LogTemp, Log, TEXT("Collision Detected"));
 

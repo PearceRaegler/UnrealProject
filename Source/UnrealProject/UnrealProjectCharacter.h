@@ -52,6 +52,8 @@ class AUnrealProjectCharacter : public ACharacter
 public:
 	AUnrealProjectCharacter();
 
+	virtual void Tick(float DeltaTime) override;
+
 protected:
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
