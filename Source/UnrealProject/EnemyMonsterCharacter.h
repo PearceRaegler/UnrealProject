@@ -41,7 +41,4 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UAISenseConfig_Sight* sightConfig;
-
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
-	//float MoveSpeed;
 };

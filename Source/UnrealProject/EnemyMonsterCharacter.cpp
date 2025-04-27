@@ -5,6 +5,7 @@
 #include "Perception/PawnSensingComponent.h" 
 #include "GameFramework/CharacterMovementComponent.h"
 #include "EnemyController.h"
+#include "EnemyAnimInstance.h"
 
 // Sets default values
 AEnemyMonsterCharacter::AEnemyMonsterCharacter()
@@ -47,7 +48,7 @@ void AEnemyMonsterCharacter::Chase(APawn* targetPawn)
 {
 	//auto animInst = GetMesh()->GetAnimInstance();
 	//auto enemyAnimInst = Cast<UEnemyAnimInstance>(animInst);
-	if (targetPawn != nullptr /* && enemyAnimInst->State == EEnemyState::Locomotion*/)
+	if (targetPawn != nullptr)
 	{
 		auto enemyController = Cast<AEnemyController>(GetController());
 		enemyController->MoveToActor(targetPawn, 90.0f);
