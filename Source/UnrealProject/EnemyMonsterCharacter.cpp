@@ -18,11 +18,11 @@ AEnemyMonsterCharacter::AEnemyMonsterCharacter()
 
 	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerception Component"));
 	sightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config"));
-	sightConfig->SightRadius = 1000.0f; //max distance for sight
-	sightConfig->LoseSightRadius = 1100.0f; //when it loses sight of seen target
+	sightConfig->SightRadius = 500.0f; //max distance for sight
+	sightConfig->LoseSightRadius = 550.0f; //when it loses sight of seen target
 	sightConfig->PeripheralVisionAngleDegrees = 125.0f;
-	sightConfig->DetectionByAffiliation.bDetectEnemies = true;
-	sightConfig->DetectionByAffiliation.bDetectFriendlies = true;
+	sightConfig->DetectionByAffiliation.bDetectEnemies = false;
+	sightConfig->DetectionByAffiliation.bDetectFriendlies = false;
 	sightConfig->DetectionByAffiliation.bDetectNeutrals = true;
 	AIPerceptionComponent->ConfigureSense(*sightConfig);
 	AIPerceptionComponent->SetDominantSense(sightConfig->GetSenseImplementation());
@@ -52,14 +52,9 @@ void AEnemyMonsterCharacter::Chase(APawn* targetPawn)
 	//auto enemyAnimInst = Cast<UEnemyAnimInstance>(animInst);
 	if (targetPawn != nullptr)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("Casing"));
 		auto enemyController = Cast<AEnemyController>(GetController());
 		//_isChasing = true;
-		enemyController->MoveToActor(targetPawn, 90.0f);
-	}
-	else {
-		//_isChasing = false;
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("Line of Sight Lost"));
+		//enemyController->MoveToActor(targetPawn, 90.0f);
 	}
 }
 
