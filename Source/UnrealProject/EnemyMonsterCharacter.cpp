@@ -33,6 +33,7 @@ void AEnemyMonsterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	//MoveSpeed = 200;
 }
 
 // Called every frame
