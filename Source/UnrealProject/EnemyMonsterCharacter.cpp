@@ -20,7 +20,7 @@ AEnemyMonsterCharacter::AEnemyMonsterCharacter()
 	sightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config"));
 	sightConfig->SightRadius = 1000.0f; //max distance for sight
 	sightConfig->LoseSightRadius = 1100.0f; //when it loses sight of seen target
-	sightConfig->PeripheralVisionAngleDegrees = 90.0f;
+	sightConfig->PeripheralVisionAngleDegrees = 125.0f;
 	sightConfig->DetectionByAffiliation.bDetectEnemies = true;
 	sightConfig->DetectionByAffiliation.bDetectFriendlies = true;
 	sightConfig->DetectionByAffiliation.bDetectNeutrals = true;
@@ -34,26 +34,40 @@ void AEnemyMonsterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	//MoveSpeed = 200;
+	//GetCharacterMovement()->MaxWalkSpeed = 100.0f;
 }
 
 // Called every frame
 void AEnemyMonsterCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 }
 
 void AEnemyMonsterCharacter::Chase(APawn* targetPawn)
 {
+	_chasedTarget = targetPawn;
+
 	//auto animInst = GetMesh()->GetAnimInstance();
 	//auto enemyAnimInst = Cast<UEnemyAnimInstance>(animInst);
 	if (targetPawn != nullptr)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("Casing"));
 		auto enemyController = Cast<AEnemyController>(GetController());
+		//_isChasing = true;
 		enemyController->MoveToActor(targetPawn, 90.0f);
 	}
-	_chasedTarget = targetPawn;
+	else {
+		//_isChasing = false;
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("Line of Sight Lost"));
+	}
 }
 
+void AEnemyMonsterCharacter::SetChaseSpeed() {
+	GetCharacterMovement()->MaxWalkSpeed = 500.0f;
+}
+
+void AEnemyMonsterCharacter::SetWanderSpeed() {
+	GetCharacterMovement()->MaxWalkSpeed = 200.0f;
+}
 

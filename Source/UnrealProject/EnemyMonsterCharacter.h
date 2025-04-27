@@ -32,6 +32,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Pangaea|Enemy")
 	void Chase(APawn* targetPawn);
 
+	UFUNCTION()
+	void SetChaseSpeed();
+
+	UFUNCTION()
+	void SetWanderSpeed();
+
 // protected properties
 protected:
 	APawn* _chasedTarget = nullptr;
@@ -41,4 +47,6 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UAISenseConfig_Sight* sightConfig;
+
+	bool _isChasing;
 };

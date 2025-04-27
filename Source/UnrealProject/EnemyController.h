@@ -19,6 +19,9 @@ public:
 	UFUNCTION()
 	void PerceptionUpdated(const TArray<AActor*>& UpdatedActors);
 
+	//UFUNCTION()
+	//void MoveToRandomReachablePoint(float radius);
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	UAIPerceptionComponent* AIPerceptionComponent;
