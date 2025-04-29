@@ -26,26 +26,27 @@ void AEnemyController::PerceptionUpdated(const TArray<AActor*>& UpdatedActors) {
 		APawn* ControlledPawn = GetPawn();
 		AEnemyMonsterCharacter* EnemyPawn = Cast<AEnemyMonsterCharacter>(ControlledPawn);
 		// chase the player
-		if (DetectedPawn) {
+		//if (DetectedPawn) {
 			if (LineOfSightTo(DetectedPawn)) {
 				GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("Chasing"));
 				EnemyPawn->SetChaseSpeed();
 				MoveToActor(DetectedPawn, 10.0f);
 			}
-			//else {
-			//	// wander
-			//	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("Line of Sight Lost"));
-			//	ClearFocus(EAIFocusPriority::Gameplay);
-			//	StopMovement();
-			//}
-		}
+			else {
+				// wander
+				GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("Line of Sight Lost"));
+				ClearFocus(EAIFocusPriority::Gameplay);
+				StopMovement();
+			}
+		//}
 		// otherwise, return to wander
-		else {
-			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("Line of Sight Lost"));
-			EnemyPawn->SetWanderSpeed();
+		//else {
+			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("Line of Sight Lost"));
+			//EnemyPawn->SetWanderSpeed();
+			//StopMovement();
 			// set random nav point to go to
 			//MoveToRandomReachablePoint(300.0f);
-		}
+		//}
 	}
 }
 /*

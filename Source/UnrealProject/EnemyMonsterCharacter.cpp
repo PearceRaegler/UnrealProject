@@ -18,8 +18,8 @@ AEnemyMonsterCharacter::AEnemyMonsterCharacter()
 
 	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerception Component"));
 	sightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config"));
-	sightConfig->SightRadius = 500.0f; //max distance for sight
-	sightConfig->LoseSightRadius = 550.0f; //when it loses sight of seen target
+	sightConfig->SightRadius = 2200.0f; //max distance for sight
+	sightConfig->LoseSightRadius = 800.0f; //when it loses sight of seen target
 	sightConfig->PeripheralVisionAngleDegrees = 125.0f;
 	sightConfig->DetectionByAffiliation.bDetectEnemies = false;
 	sightConfig->DetectionByAffiliation.bDetectFriendlies = false;
