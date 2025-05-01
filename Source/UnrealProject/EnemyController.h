@@ -20,7 +20,7 @@ public:
 	void PerceptionUpdated(const TArray<AActor*>& UpdatedActors);
 
 	//UFUNCTION()
-	//void MoveToRandomReachablePoint(float radius);
+	//void GoToRandomPoint(float radius);
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))

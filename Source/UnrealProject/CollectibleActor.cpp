@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "CollectibleActor.h"
 #include "UnrealProjectCharacter.h"
 #include "SpawnPointActor.h"
 #include "Kismet/GameplayStatics.h"
 #include "ScoreWidget.h"
 #include "UnrealProjectCharacter.h"
-#include "CollectibleActor.h"
 
 // Sets default values
 ACollectibleActor::ACollectibleActor()
