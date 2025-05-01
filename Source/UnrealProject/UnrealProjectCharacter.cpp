@@ -95,7 +95,11 @@ void AUnrealProjectCharacter::BeginPlay() {
 	// reset the light
 	FlashLight->RecreateRenderState_Concurrent();
 
+	//GameOverWidget
+
 	score = 0;
+
+	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AUnrealProjectCharacter::OnHitEvent);
 }
 
 void AUnrealProjectCharacter::Tick(float DeltaTime) {
@@ -160,5 +164,12 @@ void AUnrealProjectCharacter::OnScoreChanged(int32 amount) {
 
 		sText->ScoreText->SetText(FText::Format(FText::FromString(TEXT("Score: {0}")), score));
 	}
+}
+
+void AUnrealProjectCharacter::OnHitEvent(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit) {
+
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("Hit"));
+
+
 }
 

@@ -66,6 +66,7 @@ protected:
 
 	void LightToggle();
 
+	void OnHitEvent(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 protected:
 	// APawn interface
@@ -87,6 +88,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UUserWidget* ScoreWidget;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UUserWidget* GameOverWidget;
 
 protected:
 	bool _isLightOn;
