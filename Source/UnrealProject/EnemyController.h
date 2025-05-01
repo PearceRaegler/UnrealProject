@@ -19,8 +19,6 @@ public:
 	UFUNCTION()
 	void PerceptionUpdated(const TArray<AActor*>& UpdatedActors);
 
-	//UFUNCTION()
-	//void GoToRandomPoint(float radius);
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))

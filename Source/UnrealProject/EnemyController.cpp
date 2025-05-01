@@ -3,7 +3,6 @@
 
 #include "EnemyController.h"
 #include "EnemyMonsterCharacter.h"
-#include "NavigationSystem.h"
 
 void AEnemyController::BeginPlay() {
 	Super::BeginPlay();
@@ -29,17 +28,15 @@ void AEnemyController::PerceptionUpdated(const TArray<AActor*>& UpdatedActors) {
 		if (DetectedPawn) {
 			if (LineOfSightTo(DetectedPawn)) {
 				//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("Chasing"));
-				EnemyPawn->SetChaseSpeed();
-				MoveToActor(DetectedPawn, 10.0f);
+				EnemyPawn->SetChaseSpeed();	
 			}
 			else {
-				// wander
+				// slow
 				//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("Line of Sight Lost"));
-				ClearFocus(EAIFocusPriority::Gameplay);
-				StopMovement();
 				EnemyPawn->SetWanderSpeed();
-				//GoToRandomPoint(1200.0f);
 			}
+			
+			MoveToActor(DetectedPawn, 10.0f);
 		}
 		// otherwise, return to wander
 		else {
@@ -47,19 +44,22 @@ void AEnemyController::PerceptionUpdated(const TArray<AActor*>& UpdatedActors) {
 			EnemyPawn->SetWanderSpeed();
 			ClearFocus(EAIFocusPriority::Gameplay);
 			StopMovement();
-			// set random nav point to go to
-			//GoToRandomPoint(1200.0f);
 		}
 	}
 }
-/*
+
+/* 
+* 
+* At this point I can't figure out why the code breaks,
+* so I've altered my code to have the enemy move slower when it doesn't see you
+* 
 void AEnemyController::GoToRandomPoint(float Radius)
 {
 	// Get the pawn's location
 	FVector CurrentLocation = GetPawn()->GetActorLocation();
 
 	// Get the navigation system
-	UNavigationSystemV1* NavArea = UNavigationSystemV1::UNavigationSystemV1::GetNavigationSystem(GetWorld());
+	UNavigationSystemV1* NavArea = FNavigationSystem::GetCurrent<UNavigationSystemV1>(this);
 
 	// Check if the navigation system exists
 	if (NavArea != nullptr)
@@ -68,7 +68,7 @@ void AEnemyController::GoToRandomPoint(float Radius)
 		FNavLocation RandomTargetLocation = FNavLocation(CurrentLocation);
 
 		// If a random reachable point was found
-		if (NavArea->GetRandomReachablePointInRadius(CurrentLocation, Radius, RandomTargetLocation))
+		if (NavArea->GetRandomPointInNavigableRadius(CurrentLocation, Radius, RandomTargetLocation))
 		{
 			// Move the pawn to the random location
 			MoveToLocation(RandomTargetLocation.Location, 5.0f);
