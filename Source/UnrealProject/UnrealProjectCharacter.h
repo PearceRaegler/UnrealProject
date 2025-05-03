@@ -35,8 +35,8 @@ class AUnrealProjectCharacter : public ACharacter
 	UInputMappingContext* DefaultMappingContext;
 
 	/** Jump Input Action */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
-	UInputAction* JumpAction;
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	//UInputAction* JumpAction;
 
 	/** Move Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
@@ -75,8 +75,6 @@ protected:
 	virtual void BeginPlay() override;
 	// End of APawn interface
 
-
-
 public:
 	/** Returns Mesh1P subobject **/
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
@@ -86,14 +84,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lighting")
 	USpotLightComponent* FlashLight;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UUserWidget* ScoreWidget;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UUserWidget* GameOverWidget;
 
 protected:
 	bool _isLightOn;
 	int32 score = 0;
+	bool _isAlive;
 };
 

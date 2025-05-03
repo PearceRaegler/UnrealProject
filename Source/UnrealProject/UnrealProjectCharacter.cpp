@@ -69,8 +69,8 @@ void AUnrealProjectCharacter::SetupPlayerInputComponent(UInputComponent* PlayerI
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		// Jumping
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
+		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AUnrealProjectCharacter::Move);
@@ -92,20 +92,22 @@ void AUnrealProjectCharacter::BeginPlay() {
 
 	// start with the light off
 	_isLightOn = false;
+	_isAlive = true;
+
 	// reset the light
 	FlashLight->RecreateRenderState_Concurrent();
-
-	//GameOverWidget
 
 	score = 0;
 
 	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AUnrealProjectCharacter::OnHitEvent);
+	ScoreWidget->AddToViewport(0);
 }
 
 void AUnrealProjectCharacter::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-
-	OnScoreChanged(1);
+	if (_isAlive) {
+		OnScoreChanged(1);
+	}
 }
 
 void AUnrealProjectCharacter::Move(const FInputActionValue& Value)
@@ -115,9 +117,11 @@ void AUnrealProjectCharacter::Move(const FInputActionValue& Value)
 
 	if (Controller != nullptr)
 	{
-		// add movement 
-		AddMovementInput(GetActorForwardVector(), MovementVector.Y);
-		AddMovementInput(GetActorRightVector(), MovementVector.X);
+		if (_isAlive) {
+			// add movement 
+			AddMovementInput(GetActorForwardVector(), MovementVector.Y);
+			AddMovementInput(GetActorRightVector(), MovementVector.X);
+		}
 	}
 }
 
@@ -128,38 +132,39 @@ void AUnrealProjectCharacter::Look(const FInputActionValue& Value)
 
 	if (Controller != nullptr)
 	{
-		// add yaw and pitch input to controller
-		AddControllerYawInput(LookAxisVector.X);
-		AddControllerPitchInput(LookAxisVector.Y);
+		if (_isAlive) {
+			// add yaw and pitch input to controller
+			AddControllerYawInput(LookAxisVector.X);
+			AddControllerPitchInput(LookAxisVector.Y);
+		}
 	}
 }
 
 void AUnrealProjectCharacter::LightToggle() {
-
-	// inverse the isOn bool and change the states of the light
-	if (FlashLight != nullptr) {
-		_isLightOn = !_isLightOn;
-		if (_isLightOn) {
-			// turn light on
-			FlashLight->SetIntensity(9000.0f);
-			//FlashLight->RecreateRenderState_Concurrent();
-		}
-		else {
-			// turn light off
-			FlashLight->SetIntensity(0.0f);
-			//FlashLight->RecreateRenderState_Concurrent();
+	if (_isAlive) {
+		// inverse the isOn bool and change the states of the light
+		if (FlashLight != nullptr) {
+			_isLightOn = !_isLightOn;
+			if (_isLightOn) {
+				// turn light on
+				FlashLight->SetIntensity(9000.0f);
+			}
+			else {
+				// turn light off
+				FlashLight->SetIntensity(0.0f);
+			}
 		}
 	}
 }
 
 void AUnrealProjectCharacter::OnScoreChanged(int32 amount) {
 
+	// increase the score and update the UI to match
 	score += amount;
-	//UE_LOG(LogTemp, Log, TEXT("U[pdated"));
 
 	if (ScoreWidget != nullptr) {
 
-		// add to the score
+		// update the UI
 		auto sText = Cast<UScoreWidget>(ScoreWidget);
 
 		sText->ScoreText->SetText(FText::Format(FText::FromString(TEXT("Score: {0}")), score));
