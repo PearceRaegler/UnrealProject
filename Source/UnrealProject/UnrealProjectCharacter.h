@@ -66,14 +66,14 @@ protected:
 
 	void LightToggle();
 
-	void OnHitEvent(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
-
 protected:
 	// APawn interface
 	virtual void NotifyControllerChanged() override;
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 	virtual void BeginPlay() override;
 	// End of APawn interface
+
+	//void OnCharacterBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
 
 public:
 	/** Returns Mesh1P subobject **/
@@ -90,9 +90,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UUserWidget* GameOverWidget;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collision", meta = (AllowPrivateAccess = "true"))
+	bool _isAlive;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Score", meta = (AllowPrivateAccess = "true"))
+	int32 score = 0;
+
 protected:
 	bool _isLightOn;
-	int32 score = 0;
-	bool _isAlive;
+
+
 };
 

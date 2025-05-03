@@ -34,7 +34,6 @@ void AEnemyMonsterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	//GetCharacterMovement()->MaxWalkSpeed = 100.0f;
 }
 
 // Called every frame

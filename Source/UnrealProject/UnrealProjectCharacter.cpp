@@ -45,6 +45,12 @@ AUnrealProjectCharacter::AUnrealProjectCharacter()
 	FlashLight->SetLightColor(FLinearColor(1.0f, 0.913099f, 0.40724f));
 	FlashLight->MarkRenderStateDirty();
 
+	// Create the collider that interacts with enemy
+	//CapsuleCollider->CreateDefaultSubobject<UCapsuleComponent>(TEXT("Hitbox"));
+	//CapsuleCollider->SetupAttachment(GetCapsuleComponent());
+	//CapsuleCollider->SetRelativeLocation(FVector(0.f, 0.f, 0.f)); // Position the collider
+	//CapsuleCollider->SetCapsuleHalfHeight(100.0f);
+	//CapsuleCollider->SetCapsuleRadius(60.0f);
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -99,8 +105,10 @@ void AUnrealProjectCharacter::BeginPlay() {
 
 	score = 0;
 
-	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AUnrealProjectCharacter::OnHitEvent);
 	ScoreWidget->AddToViewport(0);
+
+	// set up collision
+	//CapsuleCollider->OnComponentBeginOverlap.AddDynamic(this, &AUnrealProjectCharacter::OnCharacterBeginOverlap);
 }
 
 void AUnrealProjectCharacter::Tick(float DeltaTime) {
@@ -171,10 +179,15 @@ void AUnrealProjectCharacter::OnScoreChanged(int32 amount) {
 	}
 }
 
-void AUnrealProjectCharacter::OnHitEvent(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit) {
+/*
+void AUnrealProjectCharacter::OnCharacterBeginOverlap(AActor* OverlappedActor, AActor* OtherActor) {
 
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("Hit"));
-
-
+	// Handle the hit event here
+	if (OtherActor && OtherActor != this)
+	{
+		// Example: Print the name of the actor that was hit
+		UE_LOG(LogTemp, Warning, TEXT("Hit by: %s"), *OtherActor->GetName());
+	}
 }
+*/
 
