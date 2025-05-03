@@ -32,13 +32,12 @@ void ACollectibleActor::BeginPlay()
 
 void ACollectibleActor::OnCollectibleBeginOverlap(AActor* OverlappedActor, AActor* OtherActor) {
 	//UE_LOG(LogTemp, Log, TEXT("Collision Detected"));
-
 	// find if other actor is the player
 	auto player = Cast<AUnrealProjectCharacter>(OtherActor);
-	
+
 	// move outside of the map, then to another location some time later
 	if (player) {
-		TeleportTo(FVector(0.0f,0.0f,-100.0f), FRotator(0.0f, 0.0f, 0.0f));
+		TeleportTo(FVector(0.0f, 0.0f, -100.0f), FRotator(0.0f, 0.0f, 0.0f));
 
 		// add to the player's score
 		player->OnScoreChanged(Score);
@@ -46,7 +45,7 @@ void ACollectibleActor::OnCollectibleBeginOverlap(AActor* OverlappedActor, AActo
 		// run the move to new location after a random amount of time
 		FTimerHandle TimerHandle;
 
-		GetWorldTimerManager().SetTimer(TimerHandle, this, &ACollectibleActor::MoveToNewLocation, FMath::RandRange(10.0f, 20.0f), false); // Executes MyFunction after 2 seconds
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &ACollectibleActor::MoveToNewLocation, FMath::RandRange(10.0f, 20.0f), false); // Executes MyFunction after random amount of time
 	}
 }
 
