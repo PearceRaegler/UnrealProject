@@ -41,6 +41,10 @@ void AEnemyMonsterCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
+	if (_isChasing) {
+		GetCharacterMovement()->MaxWalkSpeed += 10;
+	}
+
 }
 
 void AEnemyMonsterCharacter::Chase(APawn* targetPawn)
@@ -58,10 +62,13 @@ void AEnemyMonsterCharacter::Chase(APawn* targetPawn)
 }
 
 void AEnemyMonsterCharacter::SetChaseSpeed() {
-	GetCharacterMovement()->MaxWalkSpeed = 500.0f;
+	if (!_isChasing) {
+		GetCharacterMovement()->MaxWalkSpeed = 500.0f;
+	}
+	_isChasing = true;
 }
 
 void AEnemyMonsterCharacter::SetWanderSpeed() {
 	GetCharacterMovement()->MaxWalkSpeed = 200.0f;
+	_isChasing = false;
 }
-

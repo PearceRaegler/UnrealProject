@@ -28,7 +28,7 @@ void AEnemyController::PerceptionUpdated(const TArray<AActor*>& UpdatedActors) {
 		if (DetectedPawn) {
 			if (LineOfSightTo(DetectedPawn)) {
 				//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("Chasing"));
-				EnemyPawn->SetChaseSpeed();	
+				EnemyPawn->SetChaseSpeed();
 			}
 			else {
 				// slow
@@ -37,13 +37,6 @@ void AEnemyController::PerceptionUpdated(const TArray<AActor*>& UpdatedActors) {
 			}
 			
 			MoveToActor(DetectedPawn, 10.0f);
-		}
-		// otherwise, return to wander
-		else {
-			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("Line of Sight Lost"));
-			EnemyPawn->SetWanderSpeed();
-			ClearFocus(EAIFocusPriority::Gameplay);
-			StopMovement();
 		}
 	}
 }
